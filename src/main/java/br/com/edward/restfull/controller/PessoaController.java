@@ -1,8 +1,10 @@
 package br.com.edward.restfull.controller;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
+import java.util.Objects;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,13 +37,12 @@ public class PessoaController {
 		return model;
 	}   
 	
-	@GetMapping("/remove")
-	public List<PessoaModel> remove(@RequestParam long id){   
-		for (PessoaModel pessoaModel : pessoas) {
-			if(pessoaModel.getId() == id) {
-				pessoas.remove(pessoaModel);
-			}
-		}		
+	@DeleteMapping("/remove")
+	public List<PessoaModel> remove(@RequestParam Long id){    
+		PessoaModel pessoaRemover = pessoas.stream().filter(item -> id.equals(item.getId())).findAny().orElse(null); 
+		if(Objects.nonNull(pessoaRemover)) {
+			pessoas.remove(pessoaRemover);
+		}
 		return pessoas;
 	}
 	

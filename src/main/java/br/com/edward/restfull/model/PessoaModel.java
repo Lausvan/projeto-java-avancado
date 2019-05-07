@@ -4,14 +4,17 @@ import java.time.ZonedDateTime;
 
 public class PessoaModel {
 
+	private static Long cont=0L;
+	
 	private ZonedDateTime dataCriacao;
 	private String nome; 
 	private Double peso; 
 	private Integer idade; 
 	private String genero; 
-	private long id;
+	private final Long id;
 
 	public PessoaModel() {
+		this.id = ++cont;
 		this.dataCriacao = ZonedDateTime.now();
 	}
 
@@ -20,21 +23,6 @@ public class PessoaModel {
 		this.nome = nome;
 	}
 	
-	
-
-	public PessoaModel(long id) {
-		super();
-		this.id = id;
-	}
-
-	public PessoaModel(String nome, Double peso, Integer idade, String genero, long id) {
-		super();
-		this.nome = nome;
-		this.peso = peso;
-		this.idade = idade;
-		this.genero = genero; 
-		this.id = id;
-	}
 
 	public String getNome() {
 		return nome;
@@ -44,7 +32,7 @@ public class PessoaModel {
 		return peso;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
