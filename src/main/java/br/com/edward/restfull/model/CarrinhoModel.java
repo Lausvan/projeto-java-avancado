@@ -3,8 +3,8 @@ package br.com.edward.restfull.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarrinhoModel { 
-	
+public class CarrinhoModel {
+
 	private final List<ItemModel> itens;
 
 	public CarrinhoModel() {
@@ -13,12 +13,12 @@ public class CarrinhoModel {
 
 	public List<ItemModel> getItens() {
 		return itens;
-	} 
-	
+	}
+
 	public Double getTotal() {
-		Double soma=0.0;
+		Double soma = 0.0;
 		for (ItemModel itemModel : itens) {
-			soma+= itemModel.getQuantidade() * itemModel.getProduto().getPreco();
+			soma += itemModel.getQuantidade() * itemModel.getProduto().getPreco();
 		}
 		return soma;
 	}

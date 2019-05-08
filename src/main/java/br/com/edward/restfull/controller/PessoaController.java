@@ -1,6 +1,6 @@
 package br.com.edward.restfull.controller;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.edward.restfull.model.FarmaceuticoModel;
+import br.com.edward.restfull.model.FornecedorModel;
 import br.com.edward.restfull.model.PessoaModel;
 
 @RestController
@@ -23,33 +25,32 @@ public class PessoaController {
 
 	@GetMapping("/param")
 	public PessoaModel param(@RequestParam String nome) {
-		return new PessoaModel(nome);
+		return new FornecedorModel(nome);
 	}
 
 	@GetMapping("/path/{nome}")
 	public PessoaModel path(@PathVariable String nome) {
-		return new PessoaModel(nome);
+		return new FarmaceuticoModel(nome);
 	}
-
+	
 	@PostMapping("/post")
-	public PessoaModel perguntar(@RequestBody PessoaModel model) { 
+	public PessoaModel perguntar(@RequestBody PessoaModel model) {
 		pessoas.add(model);
 		return model;
-	}   
-	
+	}
+
 	@DeleteMapping("/remove")
-	public List<PessoaModel> remove(@RequestParam Long id){    
-		PessoaModel pessoaRemover = pessoas.stream().filter(item -> id.equals(item.getId())).findAny().orElse(null); 
-		if(Objects.nonNull(pessoaRemover)) {
+	public List<PessoaModel> remove(@RequestParam Long id) {
+		PessoaModel pessoaRemover = pessoas.stream().filter(item -> id.equals(item.getId())).findAny().orElse(null);
+		if (Objects.nonNull(pessoaRemover)) {
 			pessoas.remove(pessoaRemover);
 		}
 		return pessoas;
 	}
-	
+
 	@GetMapping("/listar")
 	public List<PessoaModel> listar() {
 		return pessoas;
 	}
-	
 	
 }
