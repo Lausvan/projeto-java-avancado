@@ -17,6 +17,7 @@ public class ItemModel {
 	public Integer getQuantidade() {
 		return quantidade;
 	} 
-
+	
+	
 }
 

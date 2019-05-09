@@ -47,5 +47,4 @@ public class PessoaServiceImpl implements PessoaService{
 		return pessoas;
 	} 
 	
-
 }

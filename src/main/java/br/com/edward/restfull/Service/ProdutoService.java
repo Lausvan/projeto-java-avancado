@@ -6,4 +6,8 @@ public interface ProdutoService {
 
 	ProdutoModel adicionar(ProdutoModel model);
 
+	ProdutoModel consultar(Long id);
+
+	ProdutoModel alterar(ProdutoModel model);
+
 }
