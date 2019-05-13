@@ -1,4 +1,4 @@
-package br.com.edward.restfull.Service.impl;
+package br.com.edward.restfull.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,45 +6,40 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import br.com.edward.restfull.Service.PessoaService;
-import br.com.edward.restfull.model.FarmaceuticoModel;
-import br.com.edward.restfull.model.FornecedorModel;
-import br.com.edward.restfull.model.PessoaModel;
+import br.com.edward.restfull.domain.Pessoa;
+import br.com.edward.restfull.service.PessoaService;
 
 @Service
-public class PessoaServiceImpl implements PessoaService{ 
-	
-	public static final List<PessoaModel> pessoas = new ArrayList<PessoaModel>();
+public class PessoaServiceImpl implements PessoaService {
 
-	@Override
-	public PessoaModel param(String nome) {
-		return new FornecedorModel(nome);
-	}
+    private static List<Pessoa> lista = new ArrayList<>();
+    
+    @Override
+    public Pessoa cadastrar(Pessoa domain) {
+        Pessoa pessoa = this.consultar(domain.getId());
+        if (Objects.isNull(pessoa)) {
+            lista.add(domain);
+            return domain;
+        }
+        throw new RuntimeException("Pessoa já existe");
+    }
 
-	@Override
-	public PessoaModel path(String nome) {
-		return new FarmaceuticoModel(nome);
-	}
+    @Override
+    public Pessoa consultar(Long idPessoa) {
+        return lista.stream().filter(item -> idPessoa.equals(item.getId())).findAny().orElse(null);
+    }
+    
+    @Override
+    public List<Pessoa> mostrarTudo() {
+        return lista;
+    }
 
-	@Override
-	public PessoaModel perguntar(PessoaModel model) {
-		pessoas.add(model);
-		return model;
-	}
-
-	@Override
-	public List<PessoaModel> remove(Long id) {
-		PessoaModel pessoaRemover = pessoas.stream().filter(item -> id.equals(item.getId())).findAny().orElse(null);
-		if (Objects.nonNull(pessoaRemover)) {
-			pessoas.remove(pessoaRemover);
-		}
-		return pessoas;
-
-	}
-
-	@Override
-	public List<PessoaModel> lista() {
-		return pessoas;
-	} 
-	
+    @Override
+    public Pessoa remover(Long id) {
+        Pessoa pessoaRemover = this.consultar(id);
+        if (Objects.nonNull(pessoaRemover)) {
+            lista.remove(pessoaRemover);
+        }
+        return pessoaRemover;
+    }
 }

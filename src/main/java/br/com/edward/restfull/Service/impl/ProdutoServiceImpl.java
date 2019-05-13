@@ -1,59 +1,55 @@
-package br.com.edward.restfull.Service.impl;
+package br.com.edward.restfull.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import javax.management.RuntimeErrorException;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import br.com.edward.restfull.Service.ProdutoService;
+import br.com.edward.restfull.domain.Produto;
 import br.com.edward.restfull.model.ProdutoModel;
+import br.com.edward.restfull.repository.ProdutoRepository;
+import br.com.edward.restfull.service.ProdutoService;
 
+@Transactional
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
-	public static final List<ProdutoModel> produtos = new ArrayList<ProdutoModel>();
+	@Autowired
+	private ProdutoRepository produtoRepository;
+	
+    @Override
+    public Produto consultar(Long idProduto) { 
+    	return produtoRepository.findById(idProduto).orElse(null);
+    }
 
-	@Override
-	public ProdutoModel adicionar(ProdutoModel model) {
-		ProdutoModel prod = new ProdutoModel();
-		Boolean verifica = false;
-		for (ProdutoModel produtoModel : produtos) {
-			if (produtoModel.getId() == model.getId()) {
-				prod = produtoModel;
-				verifica = true;
-			}
-		}
-		if (verifica == true) {
-			throw new RuntimeErrorException(null, "Error: Id repetido");
-		} else {
-			produtos.add(model);
-			return model;
+    @Override
+    public Produto cadastrar(ProdutoModel model) {   
+        return produtoRepository.save(new Produto(model));
+    }
 
-		}
-	}
+    @Override
+    public List<Produto> mostrarTudo() {
+        return produtoRepository.findAll();
+    }
 
-	@Override
-	public ProdutoModel consultar(Long id) {
-		return produtos.stream().filter(item -> id.equals(item.getId())).findAny().orElse(null);
-	}
+    @Override
+    public Produto remover(Long id) {
+        Produto produto = this.consultar(id);
+        if (Objects.nonNull(produto)) {
+            produtoRepository.delete(produto);
+        }
+        return produto;
+    }
 
-	@Override
-	public ProdutoModel alterar(ProdutoModel model) {
-		ProdutoModel prod = new ProdutoModel();
-		Boolean verifica = false;
-		for (ProdutoModel produtoModel : produtos) {
-			if (produtoModel.getId() == model.getId()) {
-				prod = produtoModel;
-				verifica = true;
-			}
-		}
-		if (verifica == false) {
-			throw new RuntimeErrorException(null, "Error: Id não encontrado");
-		} else {
-			return consultar(model.getId()).alterar(model);
-		}
-	}
-
+    @Override
+    public Produto alterar(ProdutoModel model) {
+        Produto produto = this.consultar(model.getId());
+        if (Objects.nonNull(produto)) {
+        	produto.alterar(model);
+        	return produtoRepository.save(produto);
+        }
+        return produto;
+    }
 }

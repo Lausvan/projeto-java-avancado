@@ -1,26 +1,23 @@
 package br.com.edward.restfull.model;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import br.com.edward.restfull.domain.Carrinho;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@Getter
 public class CarrinhoModel {
-
-	private final List<ItemModel> itens;
-
-	public CarrinhoModel() {
-		this.itens = new ArrayList<>();
-	}
-
-	public List<ItemModel> getItens() {
-		return itens;
-	}
-
-	public Double getTotal() {
-		Double soma = 0.0;
-		for (ItemModel itemModel : itens) {
-			soma += itemModel.getQuantidade() * itemModel.getProduto().getPreco();
-		}
-		return soma;
+	
+	private List<ItemCarrinhoModel> itens;
+	private Double total;
+	
+	public CarrinhoModel (Carrinho domain) {
+		this.itens = domain.getItens().stream().map(ItemCarrinhoModel::new).collect(Collectors.toList());
+		this.total = domain.getTotal();
 	}
 
 }
+

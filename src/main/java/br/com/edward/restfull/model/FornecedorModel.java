@@ -1,21 +1,18 @@
 package br.com.edward.restfull.model;
 
-public class FornecedorModel extends PessoaJuridicaModel{ 
-	
-	public FornecedorModel() {
-		super();
-	}
+import br.com.edward.restfull.domain.Fornecedor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-	public FornecedorModel(String nome) {
-		super(nome);
-	}
-	
-	private String representa;
+@NoArgsConstructor
+@Getter
+public class FornecedorModel extends PessoaModel {
 
-	public String getRepresenta() {
-		return representa;
-	} 
-	
-	
-
+    private String razaoSocial;
+    private String representacao;
+    
+    public FornecedorModel(Fornecedor domain) {
+        this.razaoSocial = domain.getRazaoSocial();
+        this.representacao = domain.getRazaoSocial();
+    }
 }

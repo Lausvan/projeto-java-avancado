@@ -1,49 +1,45 @@
-package br.com.edward.restfull.Service.impl;
+package br.com.edward.restfull.service.impl;
 
 import java.util.Objects;
 
-import javax.management.RuntimeErrorException;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.edward.restfull.Service.CarrinhoService;
-import br.com.edward.restfull.model.CarrinhoModel;
-import br.com.edward.restfull.model.ItemModel;
+import br.com.edward.restfull.domain.Carrinho;
+import br.com.edward.restfull.domain.ItemCarrinho;
+import br.com.edward.restfull.domain.Produto;
+import br.com.edward.restfull.service.CarrinhoService;
+import br.com.edward.restfull.service.ProdutoService;
 
 @Service
-public class CarrinhoServiceImpl implements CarrinhoService{ 
-	
-	public static final CarrinhoModel carrinho = new CarrinhoModel();
+public class CarrinhoServiceImpl implements CarrinhoService {
 
-	@Override
-	public CarrinhoModel adicionar(Integer qtd, Long idProduto) { 
-		
-		if(ProdutoServiceImpl.produtos.stream().filter(item -> idProduto.equals(item.getId())).findAny().orElse(null) != null) {
-			ProdutoServiceImpl.produtos.stream().filter(item -> idProduto.equals(item.getId())).findAny().orElse(null).removeEstoque(qtd);
-			carrinho.getItens().add(new ItemModel(
-					ProdutoServiceImpl.produtos.stream().filter(item -> idProduto.equals(item.getId())).findAny().orElse(null),
-					qtd));  
-		}else {
-			throw new RuntimeErrorException(null, "Id nao encontrado");
-		}	
-		return carrinho;
-	}
+    private static Carrinho carrinho = new Carrinho();
+    
+    @Autowired
+    private ProdutoService produtoService;
+    
+    @Override
+    public Carrinho adicionar(Integer qtd, Long idProduto) {
+    	Produto produto = produtoService.consultar(idProduto); 
+        if (Objects.nonNull(produto)) {
+            produto.removerEstoque(qtd);
+            carrinho.addItem(qtd, produto);
+        }
+        return carrinho;
+    }
 
-	@Override
-	public CarrinhoModel remover(Long idItem) {
-		ItemModel itemRemover = carrinho.getItens().stream().filter(item -> idItem.equals(item.getProduto().getId()))
-				.findAny().orElse(null); 
-		itemRemover.getProduto().adicionaEstoque(itemRemover.getQuantidade());
-		if (Objects.nonNull(itemRemover)) {
-			carrinho.getItens().remove(itemRemover);
-		}
-		return carrinho;
-	}
-	
+    @Override
+    public Carrinho mostrarTudo() {
+        return carrinho;
+    }
 
-	@Override
-	public CarrinhoModel mostrarTudo() {
-		return carrinho;
-	}
+    @Override
+    public ItemCarrinho remover(Long idItemCarrinho) {
+
+        ItemCarrinho item = carrinho.removerItem(idItemCarrinho);
+        item.getProduto().addEstoque(item.getQtd());
+        return item;
+    }
 
 }

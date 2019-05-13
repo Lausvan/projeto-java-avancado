@@ -1,15 +1,13 @@
-package br.com.edward.restfull.Service;
+package br.com.edward.restfull.service;
 
 import java.util.List;
 
-import br.com.edward.restfull.model.PessoaModel;
+import br.com.edward.restfull.domain.Pessoa;
 
 public interface PessoaService {
-	
-	PessoaModel  param( String nome); 
-	PessoaModel path(String nome); 
-	PessoaModel perguntar (PessoaModel model); 
-	List<PessoaModel> remove(Long id);
-	List<PessoaModel> lista();
 
+    Pessoa cadastrar(Pessoa domain);
+    List<Pessoa> mostrarTudo();
+    Pessoa remover(Long id);
+    Pessoa consultar(Long idPessoa);
 }

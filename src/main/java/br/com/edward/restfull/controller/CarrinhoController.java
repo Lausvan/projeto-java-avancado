@@ -8,29 +8,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.edward.restfull.Service.CarrinhoService;
-import br.com.edward.restfull.model.CarrinhoModel;
+import br.com.edward.restfull.domain.Carrinho;
+import br.com.edward.restfull.domain.ItemCarrinho;
+import br.com.edward.restfull.service.CarrinhoService;
 
 @RestController
 @RequestMapping("/carrinho")
 public class CarrinhoController {
 
-	@Autowired
-	private CarrinhoService carrinhoService;
-
-	@PostMapping("/adicionar-ao-carrinho")
-	public CarrinhoModel cadastrar(@RequestParam Long id, Integer quantidade) {
-		return carrinhoService.adicionar(quantidade, id);
-	}
-
-	@DeleteMapping("/remove")
-	public CarrinhoModel remove(@RequestParam Long id, Integer quantidade) {
-		return carrinhoService.remover(id);
-	}
-
-	@GetMapping("/listar-produtos")
-	public CarrinhoModel listarProdutos() {
-		return carrinhoService.mostrarTudo();
-	}
-
+    @Autowired
+    private CarrinhoService carrinhoService;
+    
+    @PostMapping("/adicionar")
+    public Carrinho adicionar(@RequestParam Integer qtd, @RequestParam Long id) {
+       return carrinhoService.adicionar(qtd, id);
+    }
+    
+    @GetMapping("/mostrar-tudo")
+    public Carrinho mostrarTudo() {
+        return carrinhoService.mostrarTudo();
+    }
+    
+    @DeleteMapping("/remover")
+    public ItemCarrinho remover(@RequestParam Long id) {
+        return carrinhoService.remover(id);
+    }
 }

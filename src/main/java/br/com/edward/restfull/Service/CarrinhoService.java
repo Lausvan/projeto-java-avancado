@@ -1,14 +1,11 @@
-package br.com.edward.restfull.Service;
+package br.com.edward.restfull.service;
 
-
-import br.com.edward.restfull.model.CarrinhoModel;
+import br.com.edward.restfull.domain.Carrinho;
+import br.com.edward.restfull.domain.ItemCarrinho;
 
 public interface CarrinhoService {
 
-	CarrinhoModel adicionar(Integer qtd, Long idProduto);
-
-	CarrinhoModel remover(Long idItem);
-
-	CarrinhoModel mostrarTudo();
-
+    Carrinho adicionar(Integer qtd, Long idProduto);
+    Carrinho mostrarTudo();
+    ItemCarrinho remover(Long idItemCarrinho);
 }

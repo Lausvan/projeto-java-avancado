@@ -1,57 +1,24 @@
 package br.com.edward.restfull.model;
 
-import java.time.ZonedDateTime;
+import br.com.edward.restfull.domain.Pessoa;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-public abstract class PessoaModel {
-
-	private static Long cont = 0L;
-
-	 private ZonedDateTime dataCriacao;
-	private String nome;
-	private String documento;
-	private Double peso;
-	private Integer idade;
-	private String genero;
-	private final Long id;
-
-	public PessoaModel() {
-		this.id = ++cont;
-		this.dataCriacao = ZonedDateTime.now();
-	} 	 
-
-
-	public PessoaModel(String nome) {
-		this();
-		this.nome = nome;
-	}
-
-	public abstract boolean getDocumentacaoValida();
-
-	public String getNome() {
-		return nome;
-	}
-
-	public String getDocumento() {
-		return documento;
-	}
-
-	public Double getPeso() {
-		return peso;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Integer getIdade() {
-		return idade;
-	}
-
-	public String getGenero() {
-		return genero;
-	}
-
-	public ZonedDateTime getDataCriacao() {
-		return dataCriacao;
-	}
+@NoArgsConstructor
+@Getter
+public class PessoaModel {
+    
+    private Long id;
+    private String nome;
+    private Integer idade;
+    private String nacionalidade;
+    private String documento;
+    
+    public PessoaModel(Pessoa domain) {
+        this.id = domain.getId();
+        this.nome = domain.getNome();
+        this.idade = domain.getIdade();
+        this.nacionalidade = domain.getNacionalidade();
+        this.documento = domain.getDocumento();
+    }
 }
