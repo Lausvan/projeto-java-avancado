@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class PessoaModel {
-    
+
     private Long id;
     private String nome;
     private Integer idade;
     private String nacionalidade;
     private String documento;
-    
+
     public PessoaModel(Pessoa domain) {
         this.id = domain.getId();
         this.nome = domain.getNome();

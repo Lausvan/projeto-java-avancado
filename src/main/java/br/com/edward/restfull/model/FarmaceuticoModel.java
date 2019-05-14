@@ -12,6 +12,7 @@ public class FarmaceuticoModel extends PessoaModel {
     private String crf;
     
     public FarmaceuticoModel(Farmaceutico domain) {
+        super(domain);
         this.usaOculos = domain.getUsaOculos();
         this.crf = domain.getCrf();
     }

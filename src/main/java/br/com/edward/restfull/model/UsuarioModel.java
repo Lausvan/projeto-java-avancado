@@ -6,18 +6,16 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class UsuarioModel { 
-	
-	private Long id;
+public class UsuarioModel {
+
+    private Long id;
     private String nome;
     private String login;
-    private String senha; 
+    private String senha;
     
     public UsuarioModel(Usuario domain) {
         this.id = domain.getId();
         this.nome = domain.getNome();
         this.login = domain.getLogin();
-        this.senha = domain.getSenha();
     }
-
 }

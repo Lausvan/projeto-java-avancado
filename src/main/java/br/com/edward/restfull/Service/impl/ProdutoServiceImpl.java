@@ -2,31 +2,43 @@ package br.com.edward.restfull.service.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.edward.restfull.domain.Fornecedor;
 import br.com.edward.restfull.domain.Produto;
 import br.com.edward.restfull.model.ProdutoModel;
+import br.com.edward.restfull.model.TotalizadorProdutoModel;
 import br.com.edward.restfull.repository.ProdutoRepository;
+import br.com.edward.restfull.service.FornecedorService;
 import br.com.edward.restfull.service.ProdutoService;
 
 @Transactional
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
-	@Autowired
-	private ProdutoRepository produtoRepository;
-	
+    @Autowired
+    private ProdutoRepository produtoRepository;
+    
+    @Autowired
+    private FornecedorService fornecedorService;
+    
     @Override
-    public Produto consultar(Long idProduto) { 
-    	return produtoRepository.findById(idProduto).orElse(null);
+    public Produto consultar(Long idProduto) {
+        return produtoRepository.findById(idProduto).orElse(null);
     }
 
     @Override
-    public Produto cadastrar(ProdutoModel model) {   
-        return produtoRepository.save(new Produto(model));
+    public Produto cadastrar(ProdutoModel model) {
+        
+        Optional<Fornecedor> fornecedor = fornecedorService.findById(model.getFornecedor().getId());
+        if (fornecedor.isPresent()) {            
+            return produtoRepository.save(new Produto(model, fornecedor.get()));
+        }
+        throw new RuntimeException("Fornecedor não encontrado");
     }
 
     @Override
@@ -47,9 +59,24 @@ public class ProdutoServiceImpl implements ProdutoService {
     public Produto alterar(ProdutoModel model) {
         Produto produto = this.consultar(model.getId());
         if (Objects.nonNull(produto)) {
-        	produto.alterar(model);
-        	return produtoRepository.save(produto);
+            produto.alterar(model);
+            return produtoRepository.save(produto);
         }
         return produto;
+    }
+
+    @Override
+    public List<Produto> consultar(String nome) {
+        return produtoRepository.findByNome(nome);
+    }
+
+    @Override
+    public TotalizadorProdutoModel getTotal() {
+        
+        List<Produto> produtos = produtoRepository.findAll();
+        final Double valorMedio = produtos.stream().mapToDouble(Produto::getPreco).average().orElse(0D);
+        final Integer totalEstoque = produtos.stream().mapToInt(Produto::getQtd).sum();
+        final Integer qtdProduto = produtos.size();
+        return new TotalizadorProdutoModel(valorMedio, totalEstoque, qtdProduto);
     }
 }

@@ -16,32 +16,29 @@ import lombok.NoArgsConstructor;
 @Getter
 
 @Entity
-@Table(name="usuario")
+@Table(name = "usuario")
 public class Usuario {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
-	
-	@NotNull
-	@Column(name="nome", length = 128)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @NotNull
+    @Column(name="nome", length = 128)
     private String nome;
-	
-	@NotNull
-	@Column(name="login", length = 128)
+    
+    @NotNull
+    @Column(name="login", length = 128)
     private String login;
-	
-	@NotNull
-	@Column(name="qtd")
+    
+    @NotNull
+    @Column(name="senha", length = 512)
     private String senha;
-
-	public Usuario(UsuarioModel model) {
-		super();
-		this.nome = model.getNome();
-		this.login = model.getLogin();
-		this.senha = model.getSenha();
-	} 
-	
-	
-
+    
+    public Usuario(UsuarioModel model) {
+        this.id = model.getId();
+        this.nome = model.getNome();
+        this.login = model.getLogin();
+        this.senha = model.getSenha();
+    }
 }

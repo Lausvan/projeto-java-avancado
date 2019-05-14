@@ -6,8 +6,7 @@ import br.com.edward.restfull.domain.Usuario;
 import br.com.edward.restfull.model.UsuarioModel;
 
 public interface UsuarioService {
-	
-	Usuario cadastrar(UsuarioModel model);
-	List<Usuario> mostrarTudo();
 
+    Usuario cadastrar(UsuarioModel model);
+    List<Usuario> mostrarTudo();
 }

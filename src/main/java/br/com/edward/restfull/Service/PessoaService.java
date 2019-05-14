@@ -6,7 +6,6 @@ import br.com.edward.restfull.domain.Pessoa;
 
 public interface PessoaService {
 
-    Pessoa cadastrar(Pessoa domain);
     List<Pessoa> mostrarTudo();
     Pessoa remover(Long id);
     Pessoa consultar(Long idPessoa);

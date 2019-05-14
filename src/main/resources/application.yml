@@ -8,14 +8,14 @@ spring:
       write_dates_as_timestamps: false
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:./banco/h2db_banco
+    url: jdbc:h2:./banco/banco_h2db
     username: admin
     password: admin
   jpa:
     properties:
       hibernate:
         jdbc:
-          lob.non_contextual_creation: true
+          lob.non_contextual_creation: true      
         show_sql: true
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect

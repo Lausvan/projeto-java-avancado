@@ -1,19 +1,41 @@
 package br.com.edward.restfull.domain;
 
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import br.com.edward.restfull.model.FarmaceuticoModel;
 import lombok.Getter;
 
 @Getter
-public class Farmaceutico extends PessoaFisica {
 
-    private String crf;
+@Entity
+@Table(name="farmaceutico")
+public class Farmaceutico extends Pessoa {
+
+	@NotNull
+    @Column(name="usaOculos", length = 128)
+	private Boolean usaOculos;
+    
+	@NotNull
+    @Column(name="crf", length = 128)
+	private String crf;
 
     public Farmaceutico() {
         super();
     }
-    
+
     public Farmaceutico(FarmaceuticoModel model) {
         super(model);
         this.crf = model.getCrf();
+        this.usaOculos = model.getUsaOculos();
+    }
+    
+    @Override
+    public Boolean getDocumentoValido() {
+        return Objects.nonNull(super.getDocumento()) && super.getDocumento().length() == 11;
     }
 }

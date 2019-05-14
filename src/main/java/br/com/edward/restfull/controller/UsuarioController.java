@@ -17,17 +17,16 @@ import br.com.edward.restfull.service.UsuarioService;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-	@Autowired
+    @Autowired
     private UsuarioService usuarioService;
-	
-	   @PostMapping("/cadastrar")
-	    public UsuarioModel cadastrar(@RequestBody UsuarioModel model) {
-	        return new UsuarioModel(usuarioService.cadastrar(model));
-	    }
-	   
-	   @GetMapping("/mostrar-tudo")
-	    public List<UsuarioModel> mostrarTudo() {
-	        return usuarioService.mostrarTudo().stream().map(UsuarioModel::new).collect(Collectors.toList());
-	    }
-	
+    
+    @PostMapping("/cadastrar")
+    public UsuarioModel cadastrar(@RequestBody UsuarioModel model) {
+        return new UsuarioModel(usuarioService.cadastrar(model));
+    }
+    
+    @GetMapping("/mostrar-tudo")
+    public List<UsuarioModel> mostrarTudo() {
+        return usuarioService.mostrarTudo().stream().map(UsuarioModel::new).collect(Collectors.toList());
+    }
 }

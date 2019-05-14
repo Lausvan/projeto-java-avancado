@@ -10,14 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class CarrinhoModel {
-	
-	private List<ItemCarrinhoModel> itens;
-	private Double total;
-	
-	public CarrinhoModel (Carrinho domain) {
-		this.itens = domain.getItens().stream().map(ItemCarrinhoModel::new).collect(Collectors.toList());
-		this.total = domain.getTotal();
-	}
-
+    
+    private List<ItemCarrinhoModel> itens;
+    private Double total;
+    
+    public CarrinhoModel(Carrinho domain) {
+        this.itens = domain.getItens().stream().map(ItemCarrinhoModel::new).collect(Collectors.toList());
+        this.total = domain.getTotal();
+    }
 }
-
