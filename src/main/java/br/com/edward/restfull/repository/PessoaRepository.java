@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.edward.restfull.domain.Pessoa;
 
 @Repository
-public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
+public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
 }

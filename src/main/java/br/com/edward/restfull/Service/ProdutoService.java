@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.edward.restfull.domain.Produto;
 import br.com.edward.restfull.model.ProdutoModel;
-import br.com.edward.restfull.model.TotalizadorProdutoModel;
+import br.com.edward.restfull.model.TotalProdutoModel;
 
 public interface ProdutoService {
 
@@ -13,6 +13,5 @@ public interface ProdutoService {
     List<Produto> mostrarTudo();
     Produto remover(Long id);
     Produto alterar(ProdutoModel model);
-    List<Produto> consultar(String nome);
-    TotalizadorProdutoModel getTotal();
+    TotalProdutoModel getTotal();
 }

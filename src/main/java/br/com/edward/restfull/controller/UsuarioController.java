@@ -24,7 +24,7 @@ public class UsuarioController {
     public UsuarioModel cadastrar(@RequestBody UsuarioModel model) {
         return new UsuarioModel(usuarioService.cadastrar(model));
     }
-    
+
     @GetMapping("/mostrar-tudo")
     public List<UsuarioModel> mostrarTudo() {
         return usuarioService.mostrarTudo().stream().map(UsuarioModel::new).collect(Collectors.toList());

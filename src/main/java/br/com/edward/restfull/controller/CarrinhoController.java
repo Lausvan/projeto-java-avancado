@@ -1,6 +1,6 @@
 package br.com.edward.restfull.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +27,11 @@ public class CarrinhoController {
     @GetMapping("/mostrar-tudo")
     public CarrinhoModel mostrarTudo() {
         return new CarrinhoModel(carrinhoService.mostrarTudo());
+    }
+    
+    @GetMapping("/finalizar-carrinho")
+    public CarrinhoModel finalizarCarrinho(@RequestParam Long idCliente) {
+        return new CarrinhoModel(carrinhoService.finaliza(idCliente));
     }
     
     @DeleteMapping("/remover")

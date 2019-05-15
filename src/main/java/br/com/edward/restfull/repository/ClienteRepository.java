@@ -3,10 +3,9 @@ package br.com.edward.restfull.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.edward.restfull.domain.Carrinho;
-import br.com.edward.restfull.domain.Usuario;
+import br.com.edward.restfull.domain.Cliente;
 
 @Repository
-public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
+public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
 }

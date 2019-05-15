@@ -8,4 +8,5 @@ public interface CarrinhoService {
     Carrinho adicionar(Integer qtd, Long idProduto);
     Carrinho mostrarTudo();
     ItemCarrinho remover(Long idItemCarrinho);
+	Carrinho finaliza(Long idCliente);
 }

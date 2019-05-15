@@ -16,12 +16,12 @@ import lombok.Getter;
 @Table(name="fornecedor")
 public class Fornecedor extends Pessoa {
 
-	@NotNull
+    @NotNull
     @Column(name="representacao", length = 128)
-	private String representacao;
-	
-	@NotNull
-    @Column(name="razaoSocial", length = 128)
+    private String representacao;
+    
+    @NotNull
+    @Column(name="razao_social", length = 128)
     private String razaoSocial;
 
     public Fornecedor() {

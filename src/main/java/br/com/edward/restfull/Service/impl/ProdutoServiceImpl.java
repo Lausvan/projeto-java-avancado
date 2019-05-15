@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.edward.restfull.domain.Fornecedor;
 import br.com.edward.restfull.domain.Produto;
 import br.com.edward.restfull.model.ProdutoModel;
-import br.com.edward.restfull.model.TotalizadorProdutoModel;
+import br.com.edward.restfull.model.TotalProdutoModel;
 import br.com.edward.restfull.repository.ProdutoRepository;
 import br.com.edward.restfull.service.FornecedorService;
 import br.com.edward.restfull.service.ProdutoService;
@@ -35,7 +35,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     public Produto cadastrar(ProdutoModel model) {
         
         Optional<Fornecedor> fornecedor = fornecedorService.findById(model.getFornecedor().getId());
-        if (fornecedor.isPresent()) {            
+        if (fornecedor.isPresent()) {
             return produtoRepository.save(new Produto(model, fornecedor.get()));
         }
         throw new RuntimeException("Fornecedor não encontrado");
@@ -66,17 +66,12 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public List<Produto> consultar(String nome) {
-        return produtoRepository.findByNome(nome);
-    }
-
-    @Override
-    public TotalizadorProdutoModel getTotal() {
+    public TotalProdutoModel getTotal() {
         
-        List<Produto> produtos = produtoRepository.findAll();
-        final Double valorMedio = produtos.stream().mapToDouble(Produto::getPreco).average().orElse(0D);
-        final Integer totalEstoque = produtos.stream().mapToInt(Produto::getQtd).sum();
-        final Integer qtdProduto = produtos.size();
-        return new TotalizadorProdutoModel(valorMedio, totalEstoque, qtdProduto);
+        List<Produto> lista = this.produtoRepository.findAll();
+        Double valorMedio = lista.stream().mapToDouble(Produto::getPreco).average().orElse(0D);
+        Integer totalEstoque = lista.stream().mapToInt(Produto::getQtd).sum();
+        Integer qtdProdutos = lista.size();
+        return new TotalProdutoModel(valorMedio, totalEstoque, qtdProdutos);
     }
 }

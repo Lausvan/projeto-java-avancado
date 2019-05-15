@@ -1,6 +1,7 @@
 package br.com.edward.restfull.controller;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.edward.restfull.model.ProdutoModel;
-import br.com.edward.restfull.model.TotalizadorProdutoModel;
+import br.com.edward.restfull.model.TotalProdutoModel;
 import br.com.edward.restfull.service.ProdutoService;
 
 @RestController
@@ -30,15 +31,19 @@ public class ProdutoController {
     @PostMapping("/cadastrar")
     public ProdutoModel cadastrar(@Valid @RequestBody ProdutoModel model, BindingResult bindingResult) {
         
-        if (!bindingResult.hasErrors()) {
+        if (!bindingResult.hasErrors() && Objects.nonNull(model.getFornecedor().getId())) {
             return new ProdutoModel(produtoService.cadastrar(model));
         }
         throw new RuntimeException("Model com erros");
     }
     
     @PutMapping("/alterar")
-    public ProdutoModel alterar(@RequestBody ProdutoModel model) {
-        return new ProdutoModel(produtoService.alterar(model));
+    public ProdutoModel alterar(@Valid @RequestBody ProdutoModel model, BindingResult bindingResult) {
+        
+        if (!bindingResult.hasErrors() && Objects.nonNull(model.getId())) {
+            return new ProdutoModel(produtoService.alterar(model));
+        }
+        throw new RuntimeException("Model com erros");
     }
     
     @GetMapping("/mostrar-tudo")
@@ -52,7 +57,7 @@ public class ProdutoController {
     }
     
     @GetMapping("/get-total")
-    public TotalizadorProdutoModel getTotal() {
+    public TotalProdutoModel getTotal() {
         return produtoService.getTotal();
     }
 }

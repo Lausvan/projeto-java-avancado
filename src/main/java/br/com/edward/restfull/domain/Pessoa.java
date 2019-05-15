@@ -19,14 +19,15 @@ import lombok.Getter;
 
 @Entity
 @Table(name="pessoa")
-@Inheritance(strategy = InheritanceType.JOINED)        
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name="dataCriacao")
+    @NotNull
+    @Column(name="data_criacao")
     private ZonedDateTime dataCriacao;
     
     @NotNull
@@ -42,7 +43,7 @@ public abstract class Pessoa {
     private String nacionalidade;
     
     @NotNull
-    @Column(name="documento", length = 128)
+    @Column(name="documento", length = 14)
     private String documento;
 
     public Pessoa() {

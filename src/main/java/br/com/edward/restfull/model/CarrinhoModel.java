@@ -19,3 +19,4 @@ public class CarrinhoModel {
         this.total = domain.getTotal();
     }
 }
+                                         

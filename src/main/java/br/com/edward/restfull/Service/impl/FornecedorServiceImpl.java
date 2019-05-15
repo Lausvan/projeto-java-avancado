@@ -12,8 +12,8 @@ import br.com.edward.restfull.model.FornecedorModel;
 import br.com.edward.restfull.repository.FornecedorRepository;
 import br.com.edward.restfull.service.FornecedorService;
 
-@Service 
 @Transactional
+@Service
 public class FornecedorServiceImpl implements FornecedorService {
 
     @Autowired
@@ -33,4 +33,5 @@ public class FornecedorServiceImpl implements FornecedorService {
     public Optional<Fornecedor> findById(Long id) {
         return fornecedorRepository.findById(id);
     }
+
 }

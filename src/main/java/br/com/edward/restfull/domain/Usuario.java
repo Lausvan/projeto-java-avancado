@@ -36,7 +36,7 @@ public class Usuario {
     private String senha;
     
     public Usuario(UsuarioModel model) {
-        this.id = model.getId();
+        
         this.nome = model.getNome();
         this.login = model.getLogin();
         this.senha = model.getSenha();

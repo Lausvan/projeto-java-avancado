@@ -4,9 +4,12 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import br.com.edward.restfull.enuns.EnumFarmaceutico;
 import br.com.edward.restfull.model.FarmaceuticoModel;
 import lombok.Getter;
 
@@ -16,13 +19,14 @@ import lombok.Getter;
 @Table(name="farmaceutico")
 public class Farmaceutico extends Pessoa {
 
-	@NotNull
-    @Column(name="usaOculos", length = 128)
-	private Boolean usaOculos;
-    
-	@NotNull
+    @NotNull
     @Column(name="crf", length = 128)
-	private String crf;
+    private String crf;
+    
+    @NotNull
+    @Column(name="usa_oculos")
+    @Enumerated(EnumType.STRING)
+    private EnumFarmaceutico usaOculos;
 
     public Farmaceutico() {
         super();
@@ -33,7 +37,7 @@ public class Farmaceutico extends Pessoa {
         this.crf = model.getCrf();
         this.usaOculos = model.getUsaOculos();
     }
-    
+
     @Override
     public Boolean getDocumentoValido() {
         return Objects.nonNull(super.getDocumento()) && super.getDocumento().length() == 11;
