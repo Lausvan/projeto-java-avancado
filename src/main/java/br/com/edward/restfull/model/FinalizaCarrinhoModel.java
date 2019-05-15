@@ -1,8 +1,12 @@
 package br.com.edward.restfull.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class FinalizaCarrinhoModel {
+@Getter
+public class FinalizaCarrinhoModel { 
+	
+	private Long idCliente;
 
 }
