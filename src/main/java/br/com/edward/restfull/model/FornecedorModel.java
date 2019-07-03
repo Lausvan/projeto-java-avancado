@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 public class FornecedorModel extends PessoaModel {
 
     private String razaoSocial;
-    private String representacao;
-    
+
     public FornecedorModel(Fornecedor domain) {
         super(domain);
         this.razaoSocial = domain.getRazaoSocial();
-        this.representacao = domain.getRepresentacao();
     }
 }

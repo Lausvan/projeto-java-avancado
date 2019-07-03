@@ -9,7 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.com.edward.restfull.enuns.EnumFarmaceutico;
+import br.com.edward.restfull.enuns.EnumTipoOculos;
 import br.com.edward.restfull.model.FarmaceuticoModel;
 import lombok.Getter;
 
@@ -19,14 +19,12 @@ import lombok.Getter;
 @Table(name="farmaceutico")
 public class Farmaceutico extends Pessoa {
 
-    @NotNull
     @Column(name="crf", length = 128)
     private String crf;
     
-    @NotNull
-    @Column(name="usa_oculos")
     @Enumerated(EnumType.STRING)
-    private EnumFarmaceutico usaOculos;
+    @Column(name="usa_oculos")
+    private EnumTipoOculos usaOculos;
 
     public Farmaceutico() {
         super();

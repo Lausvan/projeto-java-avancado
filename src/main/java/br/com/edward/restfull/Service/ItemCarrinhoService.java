@@ -6,5 +6,6 @@ import br.com.edward.restfull.domain.Produto;
 
 public interface ItemCarrinhoService {
 
-    ItemCarrinho getItem(Integer qtd, Produto produto, Carrinho carrinho);
+    ItemCarrinho addItem(Integer qtd, Produto produto, Carrinho carrinho);
+    ItemCarrinho remover(ItemCarrinho removerItem);
 }

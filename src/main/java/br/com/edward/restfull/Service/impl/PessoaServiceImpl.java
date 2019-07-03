@@ -17,7 +17,7 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Autowired
     private PessoaRepository pessoaRepository;
-    
+
     @Override
     public Pessoa consultar(Long idPessoa) {
         return pessoaRepository.findById(idPessoa).orElse(null);

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.edward.restfull.domain.Cliente;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 }

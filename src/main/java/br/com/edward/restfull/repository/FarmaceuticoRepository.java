@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.edward.restfull.domain.Farmaceutico;
-import br.com.edward.restfull.domain.Usuario;
 
 @Repository
 public interface FarmaceuticoRepository extends JpaRepository<Farmaceutico, Long> {

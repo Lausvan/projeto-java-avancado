@@ -39,8 +39,9 @@ public class ItemCarrinho {
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "carrinho_id")
     private Carrinho carrinho;
-
+    
     public ItemCarrinho(Integer qtd, Produto produto, Carrinho carrinho) {
+        this();
         this.qtd = qtd;
         this.produto = produto;
         this.carrinho = carrinho;

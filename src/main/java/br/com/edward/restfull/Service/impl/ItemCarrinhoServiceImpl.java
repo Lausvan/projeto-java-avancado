@@ -15,12 +15,18 @@ import br.com.edward.restfull.service.ItemCarrinhoService;
 public class ItemCarrinhoServiceImpl implements ItemCarrinhoService {
 
     @Autowired
-    private ItemCarrinhoRepository a;
+    private ItemCarrinhoRepository itemCarrinhoRepository;
     
     @Override
-    public ItemCarrinho getItem(Integer qtd, Produto produto, Carrinho carrinho) {
+    public ItemCarrinho addItem(Integer qtd, Produto produto, Carrinho carrinho) {
         produto.removerEstoque(qtd);
-        return a.save(new ItemCarrinho(qtd, produto, carrinho));
+        return itemCarrinhoRepository.save(new ItemCarrinho(qtd, produto, carrinho));
     }
 
+    @Override
+    public ItemCarrinho remover(ItemCarrinho item) {
+        item.getProduto().addEstoque(item.getQtd());
+        itemCarrinhoRepository.delete(item);
+        return item;
+    }
 }

@@ -1,19 +1,17 @@
 package br.com.edward.restfull.controller;
 
-import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.edward.restfull.model.CarrinhoModel;
-import br.com.edward.restfull.model.FinalizaCarrinhoModel;
 import br.com.edward.restfull.model.ItemCarrinhoModel;
 import br.com.edward.restfull.service.CarrinhoService;
 
@@ -29,17 +27,19 @@ public class CarrinhoController {
        return new CarrinhoModel(carrinhoService.adicionar(qtd, id));
     }
     
-    @GetMapping("/mostrar-tudo")
-    public CarrinhoModel mostrarTudo() {
-        return new CarrinhoModel(carrinhoService.mostrarTudo());
+    @GetMapping("/mostrar-abertos")
+    public List<CarrinhoModel> mostrarAbertos() {
+        return carrinhoService.mostrarAbertos().stream().map(CarrinhoModel::new).collect(Collectors.toList());
     }
     
-    @GetMapping("/finalizar-carrinho")
-    public CarrinhoModel finalizarCarrinho(@Valid @RequestBody FinalizaCarrinhoModel model, BindingResult bindingResult ) {
-    	if(!bindingResult.hasErrors()) {
-        return new CarrinhoModel(carrinhoService.finaliza(model.getIdCliente()));
-    	}
-    	throw new RuntimeException("Model com erros");
+    @GetMapping("/mostrar-fechados")
+    public List<CarrinhoModel> mostrarFechados() {
+        return carrinhoService.mostrarFechados().stream().map(CarrinhoModel::new).collect(Collectors.toList());
+    }
+    
+    @PostMapping("/finalizar")
+    public CarrinhoModel finalizar(@RequestParam Long id) {
+        return new CarrinhoModel(carrinhoService.finalizar(id));
     }
     
     @DeleteMapping("/remover")

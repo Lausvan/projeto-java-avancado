@@ -16,27 +16,28 @@ import lombok.Getter;
 @Getter
 
 @Entity
-@Table(name="fornecedor")
-public class Cliente extends Pessoa { 
-	
-	@NotNull
-    @Column(name="usa_oculos")
+@Table(name="cliente")
+public class Cliente extends Pessoa {
+
     @Enumerated(EnumType.STRING)
+    @Column(name="tipo")
     private EnumTipoCliente tipo;
 
-	
-	public Cliente(@NotNull EnumTipoCliente tipo) {
-		super();
-		this.tipo = tipo;
-	}
-	
-	public Cliente(ClienteModel model) {
-        super(model);
-        this.tipo = model.getTipo();
+    @Column(name="limite")
+    private Double limite;
+    
+    public Cliente() {
+        super();
     }
 
-	 @Override
-	    public Boolean getDocumentoValido() {
-	        return Objects.nonNull(super.getDocumento()) && super.getDocumento().length() == 11;
-	    }
+    public Cliente(ClienteModel model) {
+        super(model);
+        this.tipo = model.getTipo();
+        this.limite = model.getLimite();
+    }
+    
+    @Override
+    public Boolean getDocumentoValido() {
+        return Objects.nonNull(super.getDocumento()) && (super.getDocumento().length() == 11 || super.getDocumento().length() == 14);
+    }
 }

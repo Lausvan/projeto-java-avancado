@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.management.RuntimeErrorException;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.com.edward.restfull.enuns.EnumStatus;
+import br.com.edward.restfull.enuns.EnumStatusCarrinho;
 import lombok.Getter;
 
 @Getter
@@ -31,22 +30,23 @@ public class Carrinho {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
-    
-    @NotNull
-    @Column(name="status")
-    @Enumerated(EnumType.STRING)
-    private EnumStatus status;
+    private Long id;
     
     @OneToMany(mappedBy = "carrinho", targetEntity = ItemCarrinho.class, cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    private List<ItemCarrinho> itens; 
+    private List<ItemCarrinho> itens;
+    
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name="status")
+    private EnumStatusCarrinho status;
     
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente")
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
     
     public Carrinho() {
         this.itens = new ArrayList<>();
+        this.status = EnumStatusCarrinho.ABERTO;
     }
     
     public Double getTotal() {
@@ -64,16 +64,15 @@ public class Carrinho {
             this.itens.remove(item);
         }
         return item;
-    } 
-    
-    public Carrinho fechaCarrinho(Cliente cliente) {
-    	if(this.status.equals(EnumStatus.ABERTO)) {
-    		this.status = EnumStatus.FECHADO;
-    		this.cliente = cliente;
-    		return this;
-    	}
-    	throw new RuntimeException("Erro, carrinho fechado");
-    	
     }
     
+    public Carrinho finalizar(Cliente cliente) {
+        
+        if (EnumStatusCarrinho.ABERTO.equals(this.status)) {
+            this.status = EnumStatusCarrinho.FECHADO;
+            this.cliente = cliente;
+            return this;
+        }
+        throw new RuntimeException("Carrinho já fechado");
+    }
 }

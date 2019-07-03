@@ -38,7 +38,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         if (fornecedor.isPresent()) {
             return produtoRepository.save(new Produto(model, fornecedor.get()));
         }
-        throw new RuntimeException("Fornecedor não encontrado");
+        throw new RuntimeException("Fornecedor nao encontrado");
     }
 
     @Override
